@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const routes = require('./routes/api');
+const HttpError = require("./models/httpError");
 require('dotenv').config();
 
 const app = express();
@@ -24,9 +25,17 @@ app.use(bodyParser.json());
 
 app.use('/api', routes);
 
+app.use((req, res, next) => {
+  const error = HttpError("Could not find this route.", 404);
+  throw error;
+});
+
 app.use((err, req, res, next) => {
-  console.log(err);
-  next();
+  if (res.headerSent) {
+    return next(err);
+  }
+  res.status(err.code || 500);
+  res.json({ error: err.message || "An unknown error occured" });
 });
 
 app.listen(port, () => {
