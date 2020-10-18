@@ -10,7 +10,9 @@
     "axios": "^0.19.2",
     "debounce": "^1.2.0",
     "jquery": "^3.4.1",
+    "moment": "^2.29.1",
     "node-sass": "^4.13.1",
+    "pikaday": "^1.8.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-redux": "^7.1.3",
@@ -39,5 +41,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "devDependencies": {}
 }
