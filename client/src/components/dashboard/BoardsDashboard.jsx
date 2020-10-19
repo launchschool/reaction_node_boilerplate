@@ -1,11 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import BoardTile from "./BoardTile";
+import { useSelector, useDispatch } from "react-redux";
+import * as actions from "../../actions/BoardActions";
 import CreateBoardTile from "./CreateBoardTile";
 
-const BoardsDashboard = props => {
-  let boards = props.boards.map(board => {
-    return <BoardTile key={board.id} title={board.title} id={board.id} />
+const BoardsDashboard = (props) => {
+  const boards = useSelector((state) => state.boards);
+
+  const boardTiles = boards.map((board) => {
+    return <BoardTile key={board._id} title={board.title} id={board._id} />;
   });
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(actions.fetchBoards());
+  }, [dispatch]);
 
   return (
     <main className="dashboard">
@@ -18,7 +28,7 @@ const BoardsDashboard = props => {
         </header>
 
         <ul className="dashboard-board-tiles">
-          {boards}
+          {boardTiles}
           <CreateBoardTile onClick={props.onNewBoardClick} />
         </ul>
       </section>

@@ -1,73 +1,47 @@
-import React from "react";
-import { connect } from "react-redux";
-import * as actions from "../../actions/BoardActions";
+import React, { useReducer } from "react";
 import BoardsDashboard from "./BoardsDashboard";
 import Popover from "../shared/Popover";
-import NewBoardFormContainer from "./NewBoardFormContainer";
+import NewBoardForm from "./NewBoardForm";
 
-const mapStateToProps = state => {
-  return {
-    boards: state.boards
-  };
-};
+const BoardsDashboardContainer = () => {
+  const reducer = (prevState, updatedProperty) => ({
+    ...prevState,
+    ...updatedProperty,
+  });
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onFetchBoards: () => {
-      dispatch(actions.fetchBoards());
-    }
-  };
-};
-
-class BoardsDashboardContainer extends React.Component {
-  state = {
+  const initState = {
     popover: {
       visible: false,
       attachedTo: null,
-      type: null
-    }
+      type: null,
+    },
   };
-  componentDidMount() {
-    this.props.onFetchBoards();
-  }
-  handleNewBoardClick = e => {
-    this.setState({
+
+  const [state, setState] = useReducer(reducer, initState);
+
+  const handleNewBoardClick = (e) => {
+    setState({
       popover: {
         visible: true,
         attachedTo: e.currentTarget,
-        type: "new-board"
-      }
+        type: "new-board",
+      },
     });
   };
 
-  handleClosePopoverClick = e => {
+  const handleClosePopoverClick = (e) => {
     e.preventDefault();
-
-    this.setState({
-      popover: {
-        visible: false,
-        attachedTo: null,
-        type: null
-      }
-    });
+    setState(initState);
   };
 
-  render() {
-    return (
-      <div>
-        <BoardsDashboard
-          boards={this.props.boards}
-          onNewBoardClick={this.handleNewBoardClick}
-        />
-        <Popover {...this.state.popover} coverTarget={true}>
-          <NewBoardFormContainer onCloseClick={this.handleClosePopoverClick} />
-        </Popover>
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <BoardsDashboard onNewBoardClick={handleNewBoardClick} />
+      <Popover {...state.popover} coverTarget={true}>
+        <NewBoardForm onCloseClick={handleClosePopoverClick} />
+      </Popover>
+    </div>
+  );
+};
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(BoardsDashboardContainer);
+export default BoardsDashboardContainer;
