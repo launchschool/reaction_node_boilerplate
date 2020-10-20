@@ -3,20 +3,21 @@ const HttpError = require("../models/httpError");
 const { validationResult } = require("express-validator");
 
 const getBoards = (req, res, next) => {
-  Board.find({}, "title")
-    .then(boards =>
+  Board.find({}, "title _id createdAt updatedAt")
+    .then(boards => {
       res.json({
         boards: boards.map(board => board.toObject({ getters: true }))
       })
-    )
-    .catch(next);
+    })
 };
 
 const createBoard = (req, res, next) => {
   const errors = validationResult(req);
   if (errors.isEmpty()) {
     Board.create(req.body)
-      .then(board => res.json({ board: board.toObject({ getters: true }) }))
+      .then((board) => {
+        Board.find({_id: board._id}, "title _id createdAt updatedAt").then(board => res.json(board))
+      })
       .catch(err =>
         next(new HttpError("Creating board failed, please try again", 500))
       );
