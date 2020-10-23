@@ -16,7 +16,7 @@ const createBoard = (req, res, next) => {
   if (errors.isEmpty()) {
     Board.create(req.body)
       .then((board) => {
-        Board.find({_id: board._id}, "title _id createdAt updatedAt").then(board => res.json(board))
+        Board.find({ _id: board._id }, "title _id createdAt updatedAt").then(board => res.json({ board }))
       })
       .catch(err =>
         next(new HttpError("Creating board failed, please try again", 500))
