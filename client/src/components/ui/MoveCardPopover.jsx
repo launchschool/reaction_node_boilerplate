@@ -1,16 +1,16 @@
 import React from "react";
 const MoveCardPopover = () => {
   return (
-    <div class="popover move-card">
+    <div className="popover move-card">
       <div>
         <header>
           <span>Move Card</span>
-          <a href="#" class="icon-sm icon-close"></a>
+          <a href="#" className="icon-sm icon-close"></a>
         </header>
-        <div class="content">
-          <div class="button-link setting board">
-            <span class="label">Board</span>
-            <span class="value js-board-value">First Board</span>
+        <div className="content">
+          <div className="button-link setting board">
+            <span className="label">Board</span>
+            <span className="value js-board-value">First Board</span>
             <label>Board</label>
             <select>
               <option value="1" selected>
@@ -23,9 +23,9 @@ const MoveCardPopover = () => {
             </select>
           </div>
           <div>
-            <div class="button-link setting list">
-              <span class="label">List</span>
-              <span class="value js-list-value">Intermediate</span>
+            <div className="button-link setting list">
+              <span className="label">List</span>
+              <span className="value js-list-value">Intermediate</span>
               <label>List</label>
               <select>
                 <option value="1">Basics</option>
@@ -35,9 +35,9 @@ const MoveCardPopover = () => {
                 <option value="3">Advanced</option>
               </select>
             </div>
-            <div class="button-link setting position">
-              <span class="label">Position</span>
-              <span class="value">1</span>
+            <div className="button-link setting position">
+              <span className="label">Position</span>
+              <span className="value">1</span>
               <label>Position</label>
               <select>
                 <option value="top" selected="selected">
@@ -54,7 +54,7 @@ const MoveCardPopover = () => {
             </div>
           </div>
 
-          <button class="button" type="submit">
+          <button className="button" type="submit">
             Move
           </button>
         </div>

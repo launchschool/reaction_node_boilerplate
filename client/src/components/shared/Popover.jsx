@@ -41,12 +41,12 @@ class Popover extends React.Component {
     const $attachedTo = $(this.props.attachedTo);
     const targetLocation = $attachedTo.offset();
     const attachedHeight = $attachedTo.outerHeight();
-    const elWidth = $(this.refs.popover).outerWidth(true);
-    const elHeight = $(this.refs.popover).outerHeight(true);
-    const $header = $(this.refs.popover)
+    const elWidth = $(this.popover).outerWidth(true);
+    const elHeight = $(this.popover).outerHeight(true);
+    const $header = $(this.popover)
       .find("header")
       .eq(0);
-    const $content = $(this.refs.popover)
+    const $content = $(this.popover)
       .find(".content")
       .eq(0);
     const contentVerticalMargin =
@@ -111,7 +111,7 @@ class Popover extends React.Component {
     if (this.props.visible) {
       return (
         <div
-          ref="popover"
+          ref={ (ref) => this.popover=ref }
           className={`popover ${this.props.type}`}
           style={{
             top: this.state.position.top,

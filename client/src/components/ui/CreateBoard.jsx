@@ -1,12 +1,12 @@
 import React from "react";
 const CreateBoard = () => {
   return (
-    <div class="popover new-board">
+    <div className="popover new-board">
       <header>
         <span>Create Board</span>
-        <a href="#" class="icon-sm icon-close"></a>
+        <a href="#" className="icon-sm icon-close"></a>
       </header>
-      <div class="content">
+      <div className="content">
         <form>
           <dl>
             <dt>Title</dt>
@@ -14,7 +14,7 @@ const CreateBoard = () => {
               <input type="text" placeholder='Like "Publishing Calendar"...' />
             </dd>
           </dl>
-          <button class="button" type="submit">
+          <button className="button" type="submit">
             Create
           </button>
         </form>

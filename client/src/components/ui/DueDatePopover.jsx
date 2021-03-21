@@ -62,7 +62,7 @@ class DueDatePopover extends React.Component {
               <div className="datepicker-select-date">
                 <label>
                   Date
-                  <input type="text" placeholder="Enter date" autofocus />
+                  <input type="text" placeholder="Enter date" autoFocus />
                 </label>
               </div>
               <div className="datepicker-select-time">

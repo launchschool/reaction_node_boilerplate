@@ -2,49 +2,49 @@ import React from "react";
 
 const AllBoards = () => {
   return (
-    <main class="dashboard">
-      <section class="board-group">
+    <main className="dashboard">
+      <section className="board-group">
         <header>
-          <div class="board-section-logo">
-            <span class="person-logo"></span>
+          <div className="board-section-logo">
+            <span className="person-logo"></span>
           </div>
           <h2>Personal Boards</h2>
         </header>
 
-        <ul class="dashboard-board-tiles">
-          <li class="board-tile">
+        <ul className="dashboard-board-tiles">
+          <li className="board-tile">
             <a>
-              <span class="board-title">Website Development</span>
+              <span className="board-title">Website Development</span>
             </a>
           </li>
 
-          <li class="board-tile">
+          <li className="board-tile">
             <a>
-              <span class="board-title">Recipes</span>
+              <span className="board-title">Recipes</span>
             </a>
           </li>
 
-          <li class="board-tile">
+          <li className="board-tile">
             <a>
-              <span class="board-title">Weekend Projects</span>
+              <span className="board-title">Weekend Projects</span>
             </a>
           </li>
 
-          <li class="board-tile">
+          <li className="board-tile">
             <a>
-              <span class="board-title">Legal Stuff</span>
+              <span className="board-title">Legal Stuff</span>
             </a>
           </li>
 
-          <li class="board-tile">
+          <li className="board-tile">
             <a>
-              <span class="board-title">Running Amuck</span>
+              <span className="board-title">Running Amuck</span>
             </a>
           </li>
 
-          <li class="board-tile">
-            <a class="new-board">
-              <span class="board-title">Create new board...</span>
+          <li className="board-tile">
+            <a className="new-board">
+              <span className="board-title">Create new board...</span>
             </a>
           </li>
         </ul>

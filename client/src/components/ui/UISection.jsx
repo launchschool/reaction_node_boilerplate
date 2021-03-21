@@ -14,12 +14,12 @@ const UISection = () => {
     "Move Card Popover",
     "Single Board"
   ];
-  const links = LINK_FILES.map(link => {
+  const links = LINK_FILES.map((link,idx) => {
     let formattedLink = link.split(" ");
     formattedLink[0] = formattedLink[0].toLowerCase();
     formattedLink = formattedLink.join("");
     return (
-      <p style={{ marginTop: "1em" }}>
+      <p key={idx} style={{ marginTop: "1em" }}>
         <Link
           to={`/ui/${formattedLink}`}
           style={{
