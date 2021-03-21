@@ -1,0 +1,48 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended"
+  ],
+  "rules": {
+    "jsx-a11y/anchor-is-valid": "off",
+    "jsx-a11y/anchor-has-content": "off",
+    "react-hooks/exhaustive-deps": "warn",
+    "react/prop-types": 0,
+    "react-hooks/rules-of-hooks": "error",
+    "no-console": "warn"
+  },
+  "parser": "babel-eslint",
+  "plugins": [
+    "react",
+    "import",
+    "react-hooks"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx"
+        ]
+      }
+    },
+    "react": {
+      "version": "detect"
+    }
+  }
+}
