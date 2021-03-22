@@ -28,5 +28,3 @@ While developing the app, you can take a look at the static pages that you'll ev
 
 The starting point of the application is the `/client/src/index.js` file. That's where the root component of the application - `Application` - is rendered to the DOM. You can add new components to the `/client/src/components` folder.
 ```
-
-"test feature"
