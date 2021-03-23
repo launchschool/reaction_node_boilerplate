@@ -1,21 +1,28 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const BoardSchema = new Schema({
+const ListSchema = new Schema({
   title: {
     type: String,
   },
-  lists: [
+  boardId: {
+    type: Schema.Types.ObjectId,
+    ref: "Board",
+  },
+  position: {
+    type: Number
+  },
+  cards: [
     { 
       type: Schema.Types.ObjectId, 
-      ref: 'List'
+      ref: 'Card'
     }
-  ],
+  ]
 },
-{timestamps: true}
+{timeStamps: true}
 )
 
-BoardSchema.set('toJSON', {
+ListSchema.set('toJSON', {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString();
     delete returnedObject._id;
@@ -23,6 +30,6 @@ BoardSchema.set('toJSON', {
   }
 })
 
-const Board = mongoose.model('Board', BoardSchema);
+const List = mongoose.model('List', ListSchema);
 
-module.exports = Board;
+module.exports = List;
