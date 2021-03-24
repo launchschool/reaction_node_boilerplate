@@ -16,6 +16,7 @@ import MoveCardPopover from "./ui/MoveCardPopover";
 import SingleBoard from "./ui/SingleBoard";
 
 const Application = () => {
+
   return (
     <div>
       <TopNav />

@@ -16,7 +16,7 @@ const BoardsDashboard = (props) => {
   useEffect(() => {
     dispatch(actions.fetchBoards());
   }, [dispatch]);
-
+  console.log(boards);
   return (
     <main className="dashboard">
       <section className="board-group">

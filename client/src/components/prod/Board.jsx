@@ -1,6 +1,18 @@
-import React from "react";
+import React, {useEffect} from "react";
+import { Route, useRouteMatch, useParams } from "react-router-dom";
+import axios from "axios";
+
 import ListContainer from "./ListContainer"
 const Board = () => {
+//The component `Board` that will be rendered in response to that route will be responsible for parsing the URL for the id, 
+//sending a request to `/api/boards/:id`, 
+//dispatching an action to the store and render the board.
+  let { id } = useParams();
+  
+  useEffect(() => {
+    //dispatch(actions.fetchBoard(id));
+  }, []);
+
   return (
     <>
       <ListContainer />
