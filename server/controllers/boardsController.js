@@ -1,4 +1,6 @@
 const Board = require("../models/board");
+const List = require("../models/list");
+const Card = require("../models/card");
 const HttpError = require("../models/httpError");
 const { validationResult } = require("express-validator");
 const mongoose = require("mongoose");
@@ -14,8 +16,8 @@ const getBoards = (req, res, next) => {
 
 const getBoard = async (req, res, next) => {
   try {
-    const id = mongoose.Types.ObjectId(Number(req.params.id));
-    let foundBoard = await Board.findById(id);
+    const id = mongoose.Types.ObjectId(req.params.id);
+    let foundBoard = await Board.findById(id).populate({ path: "lists", populate: {path: "cards" }});
     if (foundBoard) {
       res.json(foundBoard);
     } else {

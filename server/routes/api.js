@@ -10,8 +10,8 @@ router.post('/boards', validateBoard, boardsController.createBoard );
 
 router.get('/boards/:id', boardsController.getBoard );
 
-router.post('/testerboard', boardsController.seedBoard );
+// router.post('/testerboard', boardsController.seedBoard );
 
-router.post('/testerlist', boardsController.seedList );
+// router.post('/testerlist', boardsController.seedList );
 
 module.exports = router;
