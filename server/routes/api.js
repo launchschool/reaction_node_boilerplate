@@ -12,6 +12,7 @@ router.get('/boards/:id', boardsController.getBoard );
 
 // router.post('/testerboard', boardsController.seedBoard );
 
-// router.post('/testerlist', boardsController.seedList );
+router.post('/testerlist', boardsController.seedList);
+router.post('/testercard', boardsController.seedCard);
 
 module.exports = router;

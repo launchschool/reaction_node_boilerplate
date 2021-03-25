@@ -16,7 +16,8 @@ const getBoards = (req, res, next) => {
 
 const getBoard = async (req, res, next) => {
   try {
-    const id = mongoose.Types.ObjectId(req.params.id);
+    const id = req.params.id;
+
     let foundBoard = await Board.findById(id).populate({ path: "lists", populate: {path: "cards" }});
     if (foundBoard) {
       res.json(foundBoard);
@@ -53,16 +54,30 @@ const seedBoard = async (req, res, next) => {
 
 const seedList = async (req, res, next) => {
   const foundBoard = await Board.findById("605a318bd31e8436f433b003");
-
   const newList = new List({title: "home", boardId: foundBoard.id, position: 655350});
+  let savedList = await newList.save()
+  foundBoard.lists = foundBoard.lists.concat(savedList);
+  await foundBoard.save();
 
-  const savedBoard = await newBoard.save();
+  res.json(savedList);
 
-  res.json(savedBoard);
+
+};
+
+const seedCard = async (req, res, next) => {
+  const foundBoard = await Board.findById("605a318bd31e8436f433b003");
+  const foundList = await List.findById("605cb0913c07f854b6b1b0e9");
+  const newCard = new Card({title: "noses", dueDate: null, labels: ["red", "purple"], description: "Selectors", listId: foundList.id, boardId: foundBoard.id, position: 655350});
+  let savedCard = await newCard.save()
+  foundList.cards = foundList.cards.concat(savedCard);
+  await foundList.save();
+
+  res.json(savedCard);
 };
 
 exports.getBoards = getBoards;
 exports.getBoard = getBoard;
 exports.createBoard = createBoard;
 exports.seeBoard = seedBoard;
-exports.seeList = seedList;
+exports.seedList = seedList;
+exports.seedCard = seedCard;
