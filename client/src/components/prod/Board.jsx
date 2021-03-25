@@ -1,5 +1,7 @@
 import React, {useEffect} from "react";
+import {useDispatch} from 'react-redux';
 import { Route, useRouteMatch, useParams } from "react-router-dom";
+import * as actions from '../../actions/BoardActions';
 import axios from "axios";
 
 import ListContainer from "./ListContainer"
@@ -8,9 +10,10 @@ const Board = () => {
 //sending a request to `/api/boards/:id`, 
 //dispatching an action to the store and render the board.
   let { id } = useParams();
+  let dispatch = useDispatch();
   
   useEffect(() => {
-    //dispatch(actions.fetchBoard(id));
+    dispatch(actions.fetchBoard(id));
   }, []);
 
   return (
