@@ -1,14 +1,14 @@
 // template for a single list
 import React from "react";
 import CardContainer from "./CardContainer";
-const List = () => {
+const List = (props) => {
   return (
     <div className="list-wrapper">
       <div className="list-background">
         <div className="list">
           <a className="more-icon sm-icon" href=""></a>
           <div>
-            <p className="list-title">Stuff to try (this is a list)</p>
+            <p className="list-title">{props.list.title}</p>
           </div>
           <div className="add-dropdown add-top">
             <div className="card"></div>
@@ -18,7 +18,7 @@ const List = () => {
               <span>...</span>
             </div>
           </div>
-          <CardContainer />
+          <CardContainer listId={props.list.id} />
           <div className="add-dropdown add-bottom">
             <div className="card">
               <div className="card-info"></div>

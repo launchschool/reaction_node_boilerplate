@@ -5,14 +5,17 @@ export default function lists(state = [], action) {
     // }
     case "FETCH_BOARD_SUCCESS": {
       let { lists } = action.data.board;
-      let listsId = lists.map(list => list.id);
+
+      // let listsId = lists.map(list => list.id);
+
       let listsWithout = lists.map(list => {
         let {cards, ...listWithout} = list;
         return listWithout;
       })
 
-      // return .filter(list => )
-      // working here
+      // return state.filter(list => list.boardId !== action.data.board.id).concat(listsWithout)
+      // return state.filter(list => !listsId.includes(list.id)).concat(listsWithout)
+      console.log(state);
       return listsWithout;
     }
     // case "CREATE_CARD_SUCCESS": {

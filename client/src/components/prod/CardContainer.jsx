@@ -1,11 +1,19 @@
 // servers as a container for cards, cards are iterated through
 import React from "react";
-import Card from "./Card"
-const CardContainer = () => {
+import Card from "./Card";
+import { useSelector } from "react-redux";
+
+const CardContainer = (props) => {
+  let cards = useSelector((state) => state.cards);
+  cards = cards.filter((card) => {
+    return card.listId === props.listId;
+  });
+
   return (
     <div id="cards-container" data-id="list-1-cards">
-      <Card />
-      
+      {cards.map((card) => {
+        return <Card key={card.id} card={card} />;
+      })}
     </div>
   );
 };

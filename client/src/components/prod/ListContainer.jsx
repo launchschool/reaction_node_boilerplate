@@ -1,13 +1,18 @@
 // servers as a container for lsits, lists are iterated through
 import React from "react";
 import List from "./List";
+import { useSelector } from "react-redux";
+
 const ListContainer = () => {
+  const lists = useSelector((state) => state.lists);
+
   return (
     <main>
       <div id="list-container" className="list-container">
         <div id="existing-lists" className="existing-lists">
-          <List />
-          <List />
+          {lists.map((list) => {
+            return <List key={list.id} list={list} />;
+          })}
         </div>
         <div id="new-list" className="new-list">
           <span>Add a list...</span>
@@ -19,7 +24,6 @@ const ListContainer = () => {
         </div>
       </div>
     </main>
-
   );
 };
 

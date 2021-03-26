@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import { Route, useRouteMatch, useParams } from "react-router-dom";
 import * as actions from '../../actions/BoardActions';
 import axios from "axios";
@@ -15,6 +15,9 @@ const Board = () => {
   useEffect(() => {
     dispatch(actions.fetchBoard(id));
   }, []);
+
+  const st = useSelector(state => state)
+  console.log(st);
 
   return (
     <>

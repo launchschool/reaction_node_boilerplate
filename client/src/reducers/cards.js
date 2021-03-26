@@ -4,7 +4,15 @@ export default function cards(state = [], action) {
     //   return action.cards;
     // }
     case "FETCH_BOARD_SUCCESS": {
-      return state; // change state? into lists? into cards?
+      let cards = [];
+      let { lists } = action.data.board;
+      
+      lists.forEach(list => {
+        cards.push(list.cards);
+      })
+
+      console.log(state);
+      return cards.flat();
     }
     // case "CREATE_CARD_SUCCESS": {
     //   const newCard = action.card;
