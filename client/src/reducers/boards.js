@@ -4,21 +4,19 @@ export default function boards(state = [], action) {
       return action.boards;
     }
     case "FETCH_BOARD_SUCCESS": {
-      const { lists, ...boardWithout} = action.data.board;
-      return state.filter(board => board.id !== action.data.board.id).concat(boardWithout);
+      const { lists, ...boardWithout } = action.data.board;
+      return state
+        .filter((board) => board.id !== action.data.board.id)
+        .concat(boardWithout);
     }
     case "CREATE_BOARD_SUCCESS": {
       const newBoard = action.board;
       return state.concat(newBoard);
     }
-    case "FETCH_BOARD_SUCCESS": {
-      // remove list from board
-    }
     default:
       return state;
   }
 }
-
 
 // [{title, lists}, {title, lists}, {title}, ]
 
