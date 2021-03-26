@@ -11,7 +11,6 @@ export default function cards(state = [], action) {
         cards.push(list.cards);
       })
 
-      console.log(state);
       return cards.flat();
     }
     // case "CREATE_CARD_SUCCESS": {

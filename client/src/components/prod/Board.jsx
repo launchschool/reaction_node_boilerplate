@@ -16,9 +16,6 @@ const Board = () => {
     dispatch(actions.fetchBoard(id));
   }, []);
 
-  const st = useSelector(state => state)
-  console.log(st);
-
   return (
     <>
       <ListContainer />
