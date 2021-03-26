@@ -3,6 +3,10 @@ export default function boards(state = [], action) {
     case "FETCH_BOARDS_SUCCESS": {
       return action.boards;
     }
+    case "FETCH_BOARD_SUCCESS": {
+      const { lists, ...boardWithout} = action.data.board;
+      return state.filter(board => board.id !== action.data.board.id).concat(boardWithout);
+    }
     case "CREATE_BOARD_SUCCESS": {
       const newBoard = action.board;
       return state.concat(newBoard);
@@ -15,9 +19,12 @@ export default function boards(state = [], action) {
   }
 }
 
-// Need list actions and card actions
-// list actions will remove cards from list on Fetch Success
 
-// always call cards reducer, list reducer, board reducer
-// dispatch as few actions as possible
-// but all reducers will listent
+// [{title, lists}, {title, lists}, {title}, ]
+
+// board1: {
+//   title:
+//   lists: [listid1, listid2]
+// }
+
+// [{title:, id:}]

@@ -1,18 +1,16 @@
 import React, {useEffect} from "react";
+import {useDispatch} from 'react-redux';
 import { Route, useRouteMatch, useParams } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import * as actions from '../../actions/BoardActions';
 import axios from "axios";
 
 import ListContainer from "./ListContainer"
-import { useDispatch } from "react-redux";
 const Board = () => {
-// need to return the selected board
 //The component `Board` that will be rendered in response to that route will be responsible for parsing the URL for the id, 
 //sending a request to `/api/boards/:id`, 
 //dispatching an action to the store and render the board.
   let { id } = useParams();
-  const dispatch = useDispatch();
-
+  let dispatch = useDispatch();
   
   useEffect(() => {
     dispatch(actions.fetchBoard(id));

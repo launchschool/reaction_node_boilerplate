@@ -1,6 +1,9 @@
 const Board = require("../models/board");
+const List = require("../models/list");
+const Card = require("../models/card");
 const HttpError = require("../models/httpError");
 const { validationResult } = require("express-validator");
+const mongoose = require("mongoose");
 
 const getBoards = (req, res, next) => {
   Board.find({}, "title _id createdAt updatedAt")
@@ -9,6 +12,21 @@ const getBoards = (req, res, next) => {
         boards,
       })
     })
+};
+
+const getBoard = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+
+    let foundBoard = await Board.findById(id).populate({ path: "lists", populate: {path: "cards" }});
+    if (foundBoard) {
+      res.json(foundBoard);
+    } else {
+      res.status(404).end();
+    }
+  } catch (error) {
+    next(error);
+  }  
 };
 
 const createBoard = (req, res, next) => {
@@ -26,5 +44,40 @@ const createBoard = (req, res, next) => {
   }
 };
 
+const seedBoard = async (req, res, next) => {
+  const newBoard = new Board({title: "home"});
+
+  const savedBoard = await newBoard.save();
+
+  res.json(savedBoard);
+};
+
+const seedList = async (req, res, next) => {
+  const foundBoard = await Board.findById("605a318bd31e8436f433b003");
+  const newList = new List({title: "home", boardId: foundBoard.id, position: 655350});
+  let savedList = await newList.save()
+  foundBoard.lists = foundBoard.lists.concat(savedList);
+  await foundBoard.save();
+
+  res.json(savedList);
+
+
+};
+
+const seedCard = async (req, res, next) => {
+  const foundBoard = await Board.findById("605a318bd31e8436f433b003");
+  const foundList = await List.findById("605cb0913c07f854b6b1b0e9");
+  const newCard = new Card({title: "noses", dueDate: null, labels: ["red", "purple"], description: "Selectors", listId: foundList.id, boardId: foundBoard.id, position: 655350});
+  let savedCard = await newCard.save()
+  foundList.cards = foundList.cards.concat(savedCard);
+  await foundList.save();
+
+  res.json(savedCard);
+};
+
 exports.getBoards = getBoards;
+exports.getBoard = getBoard;
 exports.createBoard = createBoard;
+exports.seeBoard = seedBoard;
+exports.seedList = seedList;
+exports.seedCard = seedCard;
