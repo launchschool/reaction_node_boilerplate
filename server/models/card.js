@@ -27,7 +27,22 @@ const CardSchema = new Schema(
     },
     position: {
       type: Number
-    }
+    },
+    archived: {
+      type: Boolean
+    },
+    comments: [
+      { 
+        type: Schema.Types.ObjectId, 
+        ref: 'Comment'
+      }
+    ],
+    actions: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Actions'
+      }
+    ]
   }
 )
 

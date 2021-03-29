@@ -64,20 +64,8 @@ const seedList = async (req, res, next) => {
 
 };
 
-const seedCard = async (req, res, next) => {
-  const foundBoard = await Board.findById("605a318bd31e8436f433b003");
-  const foundList = await List.findById("605cb0913c07f854b6b1b0e9");
-  const newCard = new Card({title: "noses", dueDate: null, labels: ["red", "purple"], description: "Selectors", listId: foundList.id, boardId: foundBoard.id, position: 655350});
-  let savedCard = await newCard.save()
-  foundList.cards = foundList.cards.concat(savedCard);
-  await foundList.save();
-
-  res.json(savedCard);
-};
-
 exports.getBoards = getBoards;
 exports.getBoard = getBoard;
 exports.createBoard = createBoard;
 exports.seeBoard = seedBoard;
 exports.seedList = seedList;
-exports.seedCard = seedCard;
