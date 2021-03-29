@@ -175,6 +175,7 @@ The response status code is 200.
           "listId": 3,
           "boardId": 1,
           "position": 65535.0,
+          "commentsCount": 0
         }
       ]
     }
@@ -299,6 +300,7 @@ The new card is returned in JSON format with a 201 response status code.
   "boardId": 1,
   "comments": [],
   "actions": []
+  "commentsCount": 0
 }
 ```
 
@@ -335,6 +337,7 @@ The card is returned in JSON format. The JSON also includes the card’s comment
   "completed": false,
   "boardId": 1,
   "comments": [],
+  "commentsCount": 0
   "actions": [
     {
       "_id": 49,
@@ -408,6 +411,7 @@ The updated card will be returned in JSON format. The returned object also inclu
   "updatedAt": "2020-10-08T18:15:25.017Z",
   "boardId": 1,
   "comments": [],
+   commentsCount": 0
   "actions": [
     {
       "_id": 50,
