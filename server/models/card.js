@@ -15,7 +15,7 @@ const CardSchema = new Schema(
       }
     ],
     description: {
-      type: String,
+      type: String
     },
     listId: {
       type: Schema.Types.ObjectId,
