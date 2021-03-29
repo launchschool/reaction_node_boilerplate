@@ -1,0 +1,7 @@
+PATCH http://localhost:5000/api/lists/605acef6a551fa27cb0d16af
+Content-Type: application/json
+
+{
+  "title":"CSS"
+}
+ // Maybe broken

@@ -1,14 +1,59 @@
 // template for a single list
-import React from "react";
+import React, { useState } from "react";
 import CardContainer from "./CardContainer";
+import { useDispatch, useSelector } from "react-redux";
+import * as actions from '../../actions/ListActions';
+
 const List = (props) => {
+  const [ inputTitle, setInputTitle ] = useState(false)
+  const [ currentTitle, setCurrentTitle ] = useState(props.list.title)
+
+  const dispatch = useDispatch();
+
+  const handleEnter = (e) => {
+    if (e.key === "Enter" || e.keyCode === 13) {
+      setInputTitle(false)
+      handleSubmit(currentTitle)
+    }
+  }
+
+  const handleBlur = (e) => {
+    setInputTitle(false)
+    handleSubmit(currentTitle)
+  }
+
+  const handleSubmit = (title) => {
+    if (title.length > 0) {
+      let list = {id: props.list.id, title}
+      dispatch(actions.editListTitle(list));
+    } else {
+      setCurrentTitle(props.list.title)
+    }
+  }
+
+  const displayTitleInput = () => {
+    return (
+      inputTitle ?
+        <input
+          type="text"
+          className="list-title"
+          value={currentTitle}
+          autoFocus="true"
+          onChange={(e) => setCurrentTitle(e.target.value)}
+          onKeyUp={handleEnter}
+          onBlur={handleBlur}
+        /> :
+        <p className="list-title" onClick={() => setInputTitle(true)}>{props.list.title}</p>
+    )
+  }
+
   return (
     <div className="list-wrapper">
       <div className="list-background">
         <div className="list">
           <a className="more-icon sm-icon" href=""></a>
           <div>
-            <p className="list-title">{props.list.title}</p>
+            {displayTitleInput()}
           </div>
           <div className="add-dropdown add-top">
             <div className="card"></div>
@@ -41,6 +86,15 @@ const List = (props) => {
 };
 
 export default List;
+
+{/* <div>
+<input
+  type="text"
+  className="list-title"
+  value="List title during editing"
+  autoFocus="true"
+/>
+</div> */}
 
 /*
 <div className="list-wrapper">

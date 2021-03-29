@@ -9,6 +9,7 @@ router.get('/boards',boardsController.getBoards );
 router.get('/boards/:id', boardsController.getBoard );
 router.post('/boards', validateBoard, boardsController.createBoard );
 router.post('/lists', listsController.createList);
+router.patch('/lists/:id', listsController.editList);
 
 // router.post('/testerboard', boardsController.seedBoard );
 

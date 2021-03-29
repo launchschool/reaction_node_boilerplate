@@ -14,4 +14,18 @@ const createList = async (req, res, next) => {
   res.json(savedList);
 };
 
+const editList = async (req, res, next) => {
+  try {
+    let { title } = req.body;
+    console.log(req.body);
+    let id = req.params.id
+    const updatedList = await List.findByIdAndUpdate(id, { title }, { new: true });
+    
+    res.json(updatedList);
+  } catch(err) {
+    next(err);
+  }
+};
+
 exports.createList = createList;
+exports.editList = editList;
