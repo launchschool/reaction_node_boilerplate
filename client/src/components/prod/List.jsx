@@ -5,6 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 import * as actions from '../../actions/ListActions';
 
 const List = (props) => {
+  // props.setActive props.activeList
+
+  //working here
+
+//   The new card form is active when the parent .list-wrapper 
+//   has the add-dropdown-active class and the .add-dropdown.add-bottom element has the active-card class.
+
+// Since only one list should have the form active at a time, only one list should have the add-dropdown-active class at a time.
   const [ inputTitle, setInputTitle ] = useState(false)
   const [ currentTitle, setCurrentTitle ] = useState(props.list.title)
 
@@ -76,7 +84,11 @@ const List = (props) => {
               <span>...</span>
             </div>
           </div>
-          <div className="add-card-toggle" data-position="bottom">
+          <div 
+            className="add-card-toggle" 
+            data-position="bottom" 
+            onClick={() => setActive(props.list.id)}
+          >
             Add a card...
           </div>
         </div>

@@ -13,6 +13,7 @@ const ListContainer = () => {
 
   let [visibility, setVisibility] = useState(false);
   let [listName, setListName] = useState("");
+  let [activeList, setActiveList] = useState("");
 
   const handleClick = () => {
     setVisibility(true);
@@ -47,7 +48,14 @@ const ListContainer = () => {
       <div id="list-container" className="list-container">
         <div id="existing-lists" className="existing-lists">
           {lists.map((list) => {
-            return <List key={list.id} list={list} />;
+            return (
+              <List 
+                key={list.id} 
+                list={list} 
+                activeList={activeList === list.id} 
+                setActive={setActiveList} 
+              />
+            )
           })}
         </div>
         <div
