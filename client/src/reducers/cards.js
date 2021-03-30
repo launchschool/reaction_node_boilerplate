@@ -1,8 +1,9 @@
+/* eslint-disable no-console */
 export default function cards(state = [], action) {
   switch (action.type) {
-    // case "FETCH_CARD_SUCCESS": {
-    //   return action.cards;
-    // }
+    case "FETCH_CARD_SUCCESS": {
+      return state.concat(action.card);
+    }
     case "FETCH_BOARD_SUCCESS": {
       let cards = [];
       let { lists } = action.data.board;
@@ -13,10 +14,11 @@ export default function cards(state = [], action) {
 
       return cards.flat();
     }
-    // case "CREATE_CARD_SUCCESS": {
-    //   const newCard = action.card;
-    //   return state.concat(newCard);
-    // }
+    case "CREATE_CARD_SUCCESS": {
+      console.log(action);
+      const newCard = action.card;
+      return state.concat(newCard);
+    }
     default:
       return state;
   }

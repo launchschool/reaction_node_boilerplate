@@ -11,13 +11,33 @@ const Board = () => {
 //dispatching an action to the store and render the board.
   let { id } = useParams();
   let dispatch = useDispatch();
+  const match = useRouteMatch();
+  const cards = useSelector(state => state.cards);
+  let boardId;
+
+  if (match.params["0"] === 'cards') {
+    const foundCard = cards.find(card => card.id === id);
+    if (foundCard) {
+      boardId = foundCard.boardId;
+    }
+  } else {
+    boardId = id;
+  }
   
   useEffect(() => {
-    dispatch(actions.fetchBoard(id));
-  }, []);
+    if (boardId) {
+      dispatch(actions.fetchBoard(boardId));
+    }
+  }, [dispatch, boardId]);
+
+  const boards = useSelector(state => state.boards);
+  const board = boards.find(board => board.id === id);
+
 
   return (
     <>
+    <h1 id="title" className="board-title">{board && board.title}</h1>
+
       <ListContainer />
       <div className="menu-sidebar">
         <div id="menu-main" className="main slide">

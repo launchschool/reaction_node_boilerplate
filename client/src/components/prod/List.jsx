@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import CardContainer from "./CardContainer";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from '../../actions/ListActions';
+import * as cardActions from '../../actions/CardActions';
 
 const List = (props) => {
   // props.setActive props.activeList
@@ -13,8 +14,9 @@ const List = (props) => {
 //   has the add-dropdown-active class and the .add-dropdown.add-bottom element has the active-card class.
 
 // Since only one list should have the form active at a time, only one list should have the add-dropdown-active class at a time.
-  const [ inputTitle, setInputTitle ] = useState(false)
-  const [ currentTitle, setCurrentTitle ] = useState(props.list.title)
+  const [ inputTitle, setInputTitle ] = useState(false);
+  const [ currentTitle, setCurrentTitle ] = useState(props.list.title);
+  const [cardTitle, setCardTitle] = useState('');
 
   const dispatch = useDispatch();
 
@@ -39,6 +41,24 @@ const List = (props) => {
     }
   }
 
+  const handleXClick = () => {
+    props.setActive("");
+    setCardTitle("");
+  }
+
+  const handleSubmitCard = (event) => {
+    const newCard = {
+      "listId": props.list.id,
+      "card": {
+        "title": cardTitle
+      }
+    }
+    
+    if (cardTitle.length > 0) {
+      dispatch(cardActions.createCard(newCard, handleXClick));
+    }
+  }
+
   const displayTitleInput = () => {
     return (
       inputTitle ?
@@ -56,7 +76,7 @@ const List = (props) => {
   }
 
   return (
-    <div className="list-wrapper">
+    <div className={`list-wrapper ${props.activeList ? 'add-dropdown-active' : ''}`}>
       <div className="list-background">
         <div className="list">
           <a className="more-icon sm-icon" href=""></a>
@@ -72,14 +92,14 @@ const List = (props) => {
             </div>
           </div>
           <CardContainer listId={props.list.id} />
-          <div className="add-dropdown add-bottom">
+          <div className={`add-dropdown add-bottom ${props.activeList ? 'active-card' : ''}`}>
             <div className="card">
               <div className="card-info"></div>
-              <textarea name="add-card"></textarea>
+              <textarea onChange={(event) => setCardTitle(event.target.value)} value={cardTitle} name="add-card"></textarea>
               <div className="members"></div>
             </div>
-            <a className="button">Add</a>
-            <i className="x-icon icon"></i>
+            <a onClick={handleSubmitCard} className="button">Add</a>
+            <i onClick={handleXClick} className="x-icon icon"></i>
             <div className="add-options">
               <span>...</span>
             </div>
@@ -87,7 +107,7 @@ const List = (props) => {
           <div 
             className="add-card-toggle" 
             data-position="bottom" 
-            onClick={() => setActive(props.list.id)}
+            onClick={() => props.setActive(props.list.id)}
           >
             Add a card...
           </div>

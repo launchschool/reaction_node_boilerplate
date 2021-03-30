@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 
 const CardContainer = (props) => {
   let cards = useSelector((state) => state.cards);
+  
   cards = cards.filter((card) => {
     return card.listId === props.listId;
   });
