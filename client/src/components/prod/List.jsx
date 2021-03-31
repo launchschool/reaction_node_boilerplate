@@ -6,14 +6,6 @@ import * as actions from '../../actions/ListActions';
 import * as cardActions from '../../actions/CardActions';
 
 const List = (props) => {
-  // props.setActive props.activeList
-
-  //working here
-
-//   The new card form is active when the parent .list-wrapper 
-//   has the add-dropdown-active class and the .add-dropdown.add-bottom element has the active-card class.
-
-// Since only one list should have the form active at a time, only one list should have the add-dropdown-active class at a time.
   const [ inputTitle, setInputTitle ] = useState(false);
   const [ currentTitle, setCurrentTitle ] = useState(props.list.title);
   const [cardTitle, setCardTitle] = useState('');

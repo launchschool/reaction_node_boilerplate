@@ -2,7 +2,7 @@
 export default function cards(state = [], action) {
   switch (action.type) {
     case "FETCH_CARD_SUCCESS": {
-      return state.concat(action.card);
+      return state.filter(card => card.id !== action.card.id).concat(action.card);
     }
     case "FETCH_BOARD_SUCCESS": {
       let cards = [];

@@ -1,27 +1,29 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import * as actions from "../../actions/CardActions";
 
-
 const CardModal = () => {
+  let [commentText, setCommentText] = useState("The activities have not been implemented yet");
   const dispatch = useDispatch();
   const { id } = useParams();
+  const state = useSelector((state) => state);
 
+  let card = state.cards.find((card) => card.id === id);
+  let list = state.lists.find((list) => list.id === card.listId);
+  card = card || {};
 
   useEffect(() => {
     dispatch(actions.fetchCard(id));
   }, [dispatch, id]);
 
-  // useEffect 
-  // dispatch action to fetch a card with id from url 
+  // useEffect
+  // dispatch action to fetch a card with id from url
   // populate state with that card
 
-      // working here.
+  // working here.
   // get boardId from that Card - WORKING ON THIS STEP.
   // now we fetch that board with that id
-  
-
   return (
     <div id="modal-container">
       <div className="screen"></div>
@@ -29,12 +31,13 @@ const CardModal = () => {
         <i className="x-icon icon close-modal"></i>
         <header>
           <i className="card-icon icon .close-modal"></i>
-          <textarea className="list-title" style={{ height: "45px" }}>
-            Cards do many cool things. Click on this card to open it and learn
-            more...
-          </textarea>
+          <textarea
+            value={card.title}
+            className="list-title"
+            style={{ height: "45px" }}
+          ></textarea>
           <p>
-            in list <a className="link">Stuff to try (this is a list)</a>
+            in list <a className="link">{list && list.title}</a>
             <i className="sub-icon sm-icon"></i>
           </p>
         </header>
@@ -44,24 +47,13 @@ const CardModal = () => {
               <ul className="modal-details-list">
                 <li className="labels-section">
                   <h3>Labels</h3>
-                  <div className="member-container">
-                    <div className="green label colorblindable"></div>
-                  </div>
-                  <div className="member-container">
-                    <div className="yellow label colorblindable"></div>
-                  </div>
-                  <div className="member-container">
-                    <div className="orange label colorblindable"></div>
-                  </div>
-                  <div className="member-container">
-                    <div className="blue label colorblindable"></div>
-                  </div>
-                  <div className="member-container">
-                    <div className="purple label colorblindable"></div>
-                  </div>
-                  <div className="member-container">
-                    <div className="red label colorblindable"></div>
-                  </div>
+                  {card.labels && card.labels.map((label, idx) => {
+                    return (
+                      <div key={idx} className="member-container">
+                        <div className={`${label} label colorblindable`}></div>
+                      </div>
+                    );
+                  })}
                   <div className="member-container">
                     <i className="plus-icon sm-icon"></i>
                   </div>
@@ -73,9 +65,10 @@ const CardModal = () => {
                       id="dueDateCheckbox"
                       type="checkbox"
                       className="checkbox"
-                      checked=""
+                      // Come back later to enable this and fix error
+                      // checked=""
                     />
-                    Aug 4 at 10:42 AM <span>(past due)</span>
+                    {card.dueDate} <span>(past due)</span>
                   </div>
                 </li>
               </ul>
@@ -85,7 +78,7 @@ const CardModal = () => {
                   Edit
                 </span>
                 <p className="textarea-overlay">
-                  Cards have a symbol to indicate if they contain a description.
+                  {card.description}
                 </p>
                 <p id="description-edit-options" className="hidden">
                   You have unsaved edits on this field.{" "}
@@ -124,6 +117,7 @@ const CardModal = () => {
                 </div>
               </div>
             </li>
+            {/* Come back later to add Comments (card.comments) & Activity Changes (card.actions) */}
             <li className="activity-section">
               <h2 className="activity-icon icon">Activity</h2>
               <ul className="horiz-list">
@@ -144,8 +138,7 @@ const CardModal = () => {
                   </small>
                   <div className="comment">
                     <label>
-                      <textarea required="" rows="1">
-                        The activities have not been implemented yet.
+                      <textarea value={commentText} required="" rows="1" onChange={(e) => setCommentText(e.target.value)}>
                       </textarea>
                       <div>
                         <a className="light-button card-icon sm-icon"></a>
@@ -169,8 +162,9 @@ const CardModal = () => {
                     <div className="card-member small-size">VR</div>
                   </div>
                   <p>
-                    <span className="member-name">Victor Reyes</span> changed the
-                    background of this board <small>yesterday at 4:53 PM</small>
+                    <span className="member-name">Victor Reyes</span> changed
+                    the background of this board{" "}
+                    <small>yesterday at 4:53 PM</small>
                   </p>
                 </li>
                 <li className="activity-comment">
@@ -187,8 +181,7 @@ const CardModal = () => {
                   </small>
                   <div className="comment">
                     <label>
-                      <textarea required="" rows="1">
-                        Example of a comment.
+                      <textarea defaultValue="Example of a comment." required="" rows="1">
                       </textarea>
                       <div>
                         <a className="light-button card-icon sm-icon"></a>
