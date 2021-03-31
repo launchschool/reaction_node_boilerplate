@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import * as actions from "../../actions/CardActions";
 
 const CardModal = () => {
-  let [commentText, setCommentText] = useState("The activities have not been implemented yet");
+  let [commentText, setCommentText] = useState(
+    "The activities have not been implemented yet"
+  );
+
   const dispatch = useDispatch();
   const { id } = useParams();
   const state = useSelector((state) => state);
@@ -12,22 +15,60 @@ const CardModal = () => {
   let card = state.cards.find((card) => card.id === id);
   let list = state.lists.find((list) => list.id === card.listId);
   card = card || {};
+  list = list || {};
+  
+  let [cardTitle, setCardTitle] = useState(card.title);
 
   useEffect(() => {
     dispatch(actions.fetchCard(id));
   }, [dispatch, id]);
 
+  // {
+  //   "card": {
+  //     "title": "My updated title",
+  //     "completed": true
+  //   }
+  // }
+
+  // Continue here, We need some validation to check for any edits made to a card
+  //  there are several properties we have to consider, refer to 1.10.1
+  // const handleSubmit = (card) => {
+  //   if (card.title.length > 0) {
+  //     let card = {id: card.id, title}
+  //     dispatch(actions.editCard(card));
+  //   } else {
+  //     setCurrentTitle(props.list.title)
+  //   }
+  // }
+
+  // const handleEnter = (e) => {
+  //   if (e.key === "Enter" || e.keyCode === 13) {
+  //     handleSubmit(card)
+  //   }
+  // }
+
+  // const handleBlur = () => {
+  //   handleSubmit(card)
+  // }
+
   return (
     <div id="modal-container">
-      <div className="screen"></div>
+      <Link to={`/boards/${list.boardId}`}>
+        <div className="screen"></div>
+      </Link>
       <div id="modal">
-        <i className="x-icon icon close-modal"></i>
+        <Link to={`/boards/${list.boardId}`}>
+          <i className="x-icon icon close-modal"></i>
+        </Link>
         <header>
           <i className="card-icon icon .close-modal"></i>
           <textarea
-            value={card.title}
+            value={cardTitle}
             className="list-title"
             style={{ height: "45px" }}
+            onChange={(e) => setCardTitle(e.target.value)}
+            // onKeyUp={handleEnter}
+            // onBlur={handleBlur}
           ></textarea>
           <p>
             in list <a className="link">{list && list.title}</a>
@@ -40,13 +81,16 @@ const CardModal = () => {
               <ul className="modal-details-list">
                 <li className="labels-section">
                   <h3>Labels</h3>
-                  {card.labels && card.labels.map((label, idx) => {
-                    return (
-                      <div key={idx} className="member-container">
-                        <div className={`${label} label colorblindable`}></div>
-                      </div>
-                    );
-                  })}
+                  {card.labels &&
+                    card.labels.map((label, idx) => {
+                      return (
+                        <div key={idx} className="member-container">
+                          <div
+                            className={`${label} label colorblindable`}
+                          ></div>
+                        </div>
+                      );
+                    })}
                   <div className="member-container">
                     <i className="plus-icon sm-icon"></i>
                   </div>
@@ -70,9 +114,7 @@ const CardModal = () => {
                 <span id="description-edit" className="link">
                   Edit
                 </span>
-                <p className="textarea-overlay">
-                  {card.description}
-                </p>
+                <p className="textarea-overlay">{card.description}</p>
                 <p id="description-edit-options" className="hidden">
                   You have unsaved edits on this field.{" "}
                   <span className="link">View edits</span> -{" "}
@@ -131,8 +173,12 @@ const CardModal = () => {
                   </small>
                   <div className="comment">
                     <label>
-                      <textarea value={commentText} required="" rows="1" onChange={(e) => setCommentText(e.target.value)}>
-                      </textarea>
+                      <textarea
+                        value={commentText}
+                        required=""
+                        rows="1"
+                        onChange={(e) => setCommentText(e.target.value)}
+                      ></textarea>
                       <div>
                         <a className="light-button card-icon sm-icon"></a>
                         <a className="light-button smiley-icon sm-icon"></a>
@@ -174,8 +220,11 @@ const CardModal = () => {
                   </small>
                   <div className="comment">
                     <label>
-                      <textarea defaultValue="Example of a comment." required="" rows="1">
-                      </textarea>
+                      <textarea
+                        defaultValue="Example of a comment."
+                        required=""
+                        rows="1"
+                      ></textarea>
                       <div>
                         <a className="light-button card-icon sm-icon"></a>
                         <a className="light-button smiley-icon sm-icon"></a>
