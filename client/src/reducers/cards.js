@@ -2,7 +2,8 @@
 export default function cards(state = [], action) {
   switch (action.type) {
     case "FETCH_CARD_SUCCESS": {
-      return state.filter(card => card.id !== action.card.id).concat(action.card);
+      let {comments, actions, ...cardWithout} = action.card;
+      return state.filter(card => card.id !== cardWithout.id).concat(cardWithout);
     }
     case "FETCH_BOARD_SUCCESS": {
       let cards = [];

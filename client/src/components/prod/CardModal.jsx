@@ -17,13 +17,6 @@ const CardModal = () => {
     dispatch(actions.fetchCard(id));
   }, [dispatch, id]);
 
-  // useEffect
-  // dispatch action to fetch a card with id from url
-  // populate state with that card
-
-  // working here.
-  // get boardId from that Card - WORKING ON THIS STEP.
-  // now we fetch that board with that id
   return (
     <div id="modal-container">
       <div className="screen"></div>

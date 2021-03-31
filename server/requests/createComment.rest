@@ -1,0 +1,9 @@
+POST http://localhost:5000/api/comments
+Content-Type: application/json
+
+{
+  "cardId": "60649c7d2e0ee216a5b1d0fc",
+  "comment": {
+    "text": "Seal comment"
+  }
+}

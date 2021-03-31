@@ -1,0 +1,9 @@
+PUT http://localhost:5000/api/cards/605b5cb6a551fa27cb0d16b2
+Content-Type: application/json
+
+{
+  "card": {
+    "title": "My updated title from seal 123",
+    "completed": true
+  }
+}

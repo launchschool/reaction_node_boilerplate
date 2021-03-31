@@ -42,7 +42,10 @@ const CardSchema = new Schema(
         type: Schema.Types.ObjectId,
         ref: 'Actions'
       }
-    ]
+    ],
+    completed: {
+      type: Boolean
+    }
   }
 )
 
