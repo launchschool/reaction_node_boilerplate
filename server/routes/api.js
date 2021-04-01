@@ -4,6 +4,9 @@ const boardsController = require("../controllers/boardsController");
 const listsController = require("../controllers/listsController");
 const cardsController = require("../controllers/cardsController");
 const commentsController = require("../controllers/commentsController");
+
+// const actionsController = require('../controllers/actionsController');
+
 const { validateBoard } = require("../validators/validators");
 
 
@@ -14,8 +17,10 @@ router.post('/lists', listsController.createList);
 router.patch('/lists/:id', listsController.editList);
 router.get('/cards/:id', cardsController.getCard);
 router.put('/cards/:id', cardsController.updateCard);
+router.patch('/cards/:id', cardsController.addAction);
 router.post('/cards', cardsController.createCard);
 router.post('/comments', commentsController.createComment);
+// router.post('/actions/:id', actionsController.createAction);
 
 
 // router.post('/testerboard', boardsController.seedBoard );

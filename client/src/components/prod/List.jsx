@@ -58,7 +58,7 @@ const List = (props) => {
           type="text"
           className="list-title"
           value={currentTitle}
-          autoFocus="true"
+          autoFocus={true}
           onChange={(e) => setCurrentTitle(e.target.value)}
           onKeyUp={handleEnter}
           onBlur={handleBlur}

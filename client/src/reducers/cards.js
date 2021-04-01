@@ -16,9 +16,12 @@ export default function cards(state = [], action) {
       return cards.flat();
     }
     case "CREATE_CARD_SUCCESS": {
-      console.log(action);
       const newCard = action.card;
       return state.concat(newCard);
+    }
+    case "EDIT_CARD_SUCCESS": {
+      let updatedCard = action.card;
+      return state.map(card => card.id === updatedCard.id ? updatedCard : card);
     }
     default:
       return state;

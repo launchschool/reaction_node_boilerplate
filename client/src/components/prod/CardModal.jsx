@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 import * as actions from "../../actions/CardActions";
+import Comment from './Comment';
+import Action from './Action';
 
 const CardModal = () => {
-  let [commentText, setCommentText] = useState(
-    "The activities have not been implemented yet"
-  );
+  // let [commentText, setCommentText] = useState(
+  //   "The activities have not been implemented yet"
+  // );
 
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -14,42 +16,74 @@ const CardModal = () => {
 
   let card = state.cards.find((card) => card.id === id);
   let list = state.lists.find((list) => list.id === card.listId);
+  let commentArray = state.comments;
+  let actionArray = state.actions;
+
+  let commentActions = commentArray.concat(actionArray).sort((a, b) => {
+    return new Date(a.createdAt) - new Date(b.createdAt)
+  })
+
+  // working on rendering actions + comments
+  console.log(commentActions);
+
   card = card || {};
   list = list || {};
   
   let [cardTitle, setCardTitle] = useState(card.title);
+  let [cardDescription, setCardDescription] = useState(card.description);
+  let [activeDescriptionForm, setActiveDescriptionFrom] = useState(false);
 
   useEffect(() => {
     dispatch(actions.fetchCard(id));
   }, [dispatch, id]);
 
-  // {
-  //   "card": {
-  //     "title": "My updated title",
-  //     "completed": true
-  //   }
-  // }
+  useEffect(() => {
+    setCardTitle(card.title);
+    setCardDescription(card.description);
+  }, [card.title, card.description])
+
 
   // Continue here, We need some validation to check for any edits made to a card
   //  there are several properties we have to consider, refer to 1.10.1
-  // const handleSubmit = (card) => {
-  //   if (card.title.length > 0) {
-  //     let card = {id: card.id, title}
-  //     dispatch(actions.editCard(card));
-  //   } else {
-  //     setCurrentTitle(props.list.title)
-  //   }
-  // }
+  const handleSubmit = (updatedCard) => {
+    if (cardTitle.length > 0) {
+      dispatch(actions.editCard(card.id, {card: updatedCard}));
+    } else {
+      alert('wtf you doin?')
+    }
+  }
 
-  // const handleEnter = (e) => {
-  //   if (e.key === "Enter" || e.keyCode === 13) {
-  //     handleSubmit(card)
-  //   }
-  // }
+  const handleDescriptionSave = (updatedCard) => {
+    handleSubmit(updatedCard);
+    setActiveDescriptionFrom(false);
+  }
 
-  // const handleBlur = () => {
-  //   handleSubmit(card)
-  // }
+  const descriptionForm = () => {
+    if (activeDescriptionForm) {
+      return (
+        <>
+          <textarea 
+            value={cardDescription}className="textarea-toggle" 
+            rows="1" 
+            autoFocus
+            onChange={({target}) => setCardDescription(target.value)}
+          >
+          </textarea>
+          <div>
+            <div className="button" value="Save" onClick={() => handleDescriptionSave({description: cardDescription})}>
+              Save
+            </div>
+            <i className="x-icon icon" onClick={() => setActiveDescriptionFrom(false)}></i>
+          </div>
+        </>
+      )
+    }
+    
+    return (
+      <p className="textarea-overlay">{card.description}</p>
+    )
+  }
+
 
   return (
     <div id="modal-container">
@@ -67,8 +101,7 @@ const CardModal = () => {
             className="list-title"
             style={{ height: "45px" }}
             onChange={(e) => setCardTitle(e.target.value)}
-            // onKeyUp={handleEnter}
-            // onBlur={handleBlur}
+            onBlur={() => handleSubmit({title: cardTitle})}
           ></textarea>
           <p>
             in list <a className="link">{list && list.title}</a>
@@ -111,14 +144,14 @@ const CardModal = () => {
               </ul>
               <form className="description">
                 <p>Description</p>
-                <span id="description-edit" className="link">
+                <span id="description-edit" className="link" onClick={() => setActiveDescriptionFrom(true)}>
                   Edit
                 </span>
-                <p className="textarea-overlay">{card.description}</p>
-                <p id="description-edit-options" className="hidden">
+                {descriptionForm()}
+                <p id="description-edit-options" className={card.description !== cardDescription ? "" : "hidden"}>
                   You have unsaved edits on this field.{" "}
-                  <span className="link">View edits</span> -{" "}
-                  <span className="link">Discard</span>
+                  <span className="link" onClick={() => setActiveDescriptionFrom(true)}>View edits</span> -{" "}
+                  <span className="link" onClick={() => setCardDescription(card.description)}>Discard</span>
                 </p>
               </form>
             </li>
@@ -159,7 +192,10 @@ const CardModal = () => {
                 <li className="not-implemented">Show Details</li>
               </ul>
               <ul className="modal-activity-list">
-                <li>
+                {/* working */}
+                <Comment />
+                <Action />
+                {/* <li>
                   <div className="member-container">
                     <div className="card-member">TP</div>
                   </div>
@@ -195,8 +231,8 @@ const CardModal = () => {
                       </div>
                     </label>
                   </div>
-                </li>
-                <li>
+                </li> */}
+                {/* <li>
                   <div className="member-container">
                     <div className="card-member small-size">VR</div>
                   </div>
@@ -205,8 +241,8 @@ const CardModal = () => {
                     the background of this board{" "}
                     <small>yesterday at 4:53 PM</small>
                   </p>
-                </li>
-                <li className="activity-comment">
+                </li> */}
+                {/* <li className="activity-comment">
                   <div className="member-container">
                     <div className="card-member">VR</div>
                   </div>
@@ -241,7 +277,7 @@ const CardModal = () => {
                       </div>
                     </label>
                   </div>
-                </li>
+                </li> */}
               </ul>
             </li>
           </ul>

@@ -1,0 +1,8 @@
+POST http://localhost:5000/api/actions/606217cfaeb146fa649337ed
+Content-Type: application/json
+
+{
+  "action": {
+    "description": "Seal action"
+  }
+}

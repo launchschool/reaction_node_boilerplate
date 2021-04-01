@@ -9,7 +9,6 @@ const getCard = async (req, res, next) => {
     const id = req.params.id;
 
     let foundCard = await Card.findById(id).populate([{path: "comments"}, {path: "actions"}]);
-    
     if (foundCard) {
       res.json(foundCard);
     } else {
@@ -54,6 +53,26 @@ const updateCard = async (req, res, next) => {
   }
 };
 
+const addAction = async (req, res, next) => {
+  try {
+    const cardId = req.params.id;
+    const {action} = req.body;
+    
+    const foundCard = await Card.findById(cardId);
+
+    const newAction = new Action({...action, cardId});
+    let savedAction = await newAction.save()
+
+    foundCard.actions = foundCard.actions.concat(savedAction.id);
+    await foundCard.save();
+
+    res.json(savedAction);
+  } catch (err) {
+    next(err);
+  }
+}
+
 exports.getCard = getCard;
 exports.createCard = createCard;
 exports.updateCard = updateCard;
+exports.addAction = addAction;

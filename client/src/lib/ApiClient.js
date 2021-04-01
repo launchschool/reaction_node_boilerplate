@@ -68,6 +68,13 @@ const apiClient = {
       .then(callback)
       .catch(logError);
   },
+  editCard: function(id, card, callback) {
+    return axios
+      .put(routes.EDIT_CARD_URL + `/${id}`, card)
+      .then(unwrapData)
+      .then(callback)
+      .catch(logError);
+  },
 };
 
 export default apiClient;

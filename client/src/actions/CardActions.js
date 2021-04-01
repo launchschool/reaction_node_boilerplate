@@ -17,6 +17,14 @@ export function fetchCardRequest() {
   return { type: types.FETCH_CARD_REQUEST };
 }
 
+export function editCardSuccess(card) {
+  return { type: types.EDIT_CARD_SUCCESS, card };
+}
+
+export function editCardRequest() {
+  return { type: types.EDIT_CARD_REQUEST };
+}
+
 export function createCard(card, callback) {
   return function (dispatch) {
     dispatch(createCardRequest());
@@ -35,6 +43,16 @@ export function fetchCard(id) {
     dispatch(fetchCardRequest());
     apiClient.fetchCard(id, (data) => {
       dispatch(fetchCardSuccess(data));
+    });
+  };
+}
+
+
+export function editCard(id, card) {
+  return function (dispatch) {
+    dispatch(editCardRequest());
+    apiClient.editCard(id, card, (data) => {
+      dispatch(editCardSuccess(data));
     });
   };
 }
