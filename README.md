@@ -27,4 +27,11 @@ While developing the app, you can take a look at the static pages that you'll ev
 ## Developing the app
 
 The starting point of the application is the `/client/src/index.js` file. That's where the root component of the application - `Application` - is rendered to the DOM. You can add new components to the `/client/src/components` folder.
-```
+
+## Calculation of item positions
+
+- If the item is the first to be created in the group, it gets a position of 65535.
+- If the item is inserted at the beginning of the group, the position becomes half of the previously-first item’s position.
+- If the item is inserted at the end of the list, the position becomes the previously-last item’s position plus 65536
+- If the item is inserted between two other items, the position becomes `(itemBefore.position + itemAfter.position) / 2`.
+- Positions are floats with a high precision (10 digits or so)
