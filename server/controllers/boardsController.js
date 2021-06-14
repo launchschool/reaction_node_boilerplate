@@ -15,7 +15,6 @@ const createBoard = (req, res, next) => {
   if (errors.isEmpty()) {
     Board.create(req.body.board)
       .then((board) => {
-        console.log("board", board);
         Board.find({ _id: board._id }, "title _id createdAt updatedAt").then(
           (board) => res.json({ board })
         );
